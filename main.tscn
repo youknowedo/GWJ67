@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4ypki7007hd5"]
+
+[ext_resource type="PackedScene" uid="uid://q3qd3muhayn" path="res://Mainguy.tscn" id="1_kabs4"]
+[ext_resource type="Script" path="res://Mainguy.gd" id="2_fe6wh"]
+
+[node name="Node" type="Node2D"]
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_kabs4")]
+position = Vector2(0, 5)
+script = ExtResource("2_fe6wh")
