@@ -1,11 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://q3qd3muhayn"]
+[gd_scene load_steps=3 format=3 uid="uid://b1ftsevu7khup"]
 
 [ext_resource type="Texture2D" uid="uid://bvw8y1frnblwm" path="res://icon.svg" id="1_qkjrr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wdbfb"]
 size = Vector2(126, 126)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="Area2D"]
 
 [node name="huvudgubbe" type="Sprite2D" parent="."]
 texture = ExtResource("1_qkjrr")

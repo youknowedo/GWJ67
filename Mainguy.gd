@@ -1,20 +1,18 @@
-extends CharacterBody2D
+extends Area2D
 
-var tile_size = 64
-var inputs = {"right": Vector2.RIGHT,
-			"left": Vector2.LEFT,
-			"up": Vector2.UP,
-			"down": Vector2.DOWN}
+var tile_size = 128
 
 func _ready():
+	set_process_input(true)
 	position = position.snapped(Vector2.ONE * tile_size)
-	position += Vector2.ONE * tile_size/2
+	position += Vector2.ONE * tile_size / 2
 
-func _unhandled_input(event):
-	print("vadsom")
-	for dir in inputs.keys():
-		if event.is_action_pressed(dir):
-			move(dir)
-
-func move(dir):
-	position += inputs[dir] * tile_size
+func _input(_event):
+	if Input.is_action_pressed("ui_up"):
+		position.y -= tile_size
+	if Input.is_action_pressed("ui_down"):
+		position.y += tile_size
+	if Input.is_action_pressed("ui_left"):
+		position.x -= tile_size
+	if Input.is_action_pressed("ui_right"):
+		position.x += tile_size
