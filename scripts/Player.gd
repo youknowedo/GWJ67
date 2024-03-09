@@ -3,6 +3,7 @@ class_name Player
 
 signal player_move
 signal health_changed
+signal player_died
 
 @onready var ray = $RayCast2D
 @onready var anim_tree = $AnimationTree
@@ -84,3 +85,17 @@ func _on_body_entered(area: Host):
 		host = area
 		ray.set_collision_mask_value(1, true)
 		health_changed.emit(health, host.health)
+
+func _on_health_timer_timeout():
+	if host&&health < max_health:
+		host.health -= 2
+		health += 10
+		if health > max_health:
+			health = max_health
+		health_changed.emit(health, host.health)
+	elif !host:
+		health -= 10
+		health_changed.emit(health, 0)
+
+		if health <= 0:
+			player_died.emit()

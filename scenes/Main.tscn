@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cnqrpery80ys6"]
+[gd_scene load_steps=9 format=3 uid="uid://cnqrpery80ys6"]
 
 [ext_resource type="PackedScene" uid="uid://b1ftsevu7khup" path="res://prefabs/Player.tscn" id="1_i8of0"]
 [ext_resource type="TileSet" uid="uid://tuw6rbxhuq2g" path="res://scenes/Main.tres" id="2_sn23d"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d2n44qjryk4ol" path="res://sprites/white.png" id="5_sjbhb"]
 [ext_resource type="Script" path="res://scripts/HealthUI.gd" id="5_w38kq"]
 [ext_resource type="Texture2D" uid="uid://c4ljfexgmjr6p" path="res://sprites/numbers.png" id="7_24utn"]
+[ext_resource type="Texture2D" uid="uid://cslx3uybut6jq" path="res://sprites/nohost.png" id="7_k67ve"]
 
 [node name="Node" type="Node2D"]
 texture_filter = 1
@@ -36,7 +37,7 @@ anchors_preset = 0
 position = Vector2(128, 120)
 texture = ExtResource("4_qes08")
 
-[node name="HealthUI" type="Control" parent="CanvasLayer/Control" node_paths=PackedStringArray("host_health_bar", "parasite_health_bar", "host_100_control", "host_100_digit", "host_10_control", "host_10_digit", "host_1_digit")]
+[node name="HealthUI" type="Control" parent="CanvasLayer/Control" node_paths=PackedStringArray("host_health_bar", "parasite_health_bar", "no_host", "host_100_control", "host_100_digit", "host_10_control", "host_10_digit", "host_1_control", "host_1_digit")]
 anchors_preset = 0
 offset_left = 9.0
 offset_top = 8.0
@@ -45,10 +46,12 @@ offset_bottom = 23.0
 script = ExtResource("5_w38kq")
 host_health_bar = NodePath("HostHealth")
 parasite_health_bar = NodePath("ParasiteHealth")
+no_host = NodePath("HostHealth/Digits/NoHost")
 host_100_control = NodePath("HostHealth/Digits/100")
 host_100_digit = NodePath("HostHealth/Digits/100/Sprite2D")
 host_10_control = NodePath("HostHealth/Digits/10")
 host_10_digit = NodePath("HostHealth/Digits/10/Sprite2D")
+host_1_control = NodePath("HostHealth/Digits/1")
 host_1_digit = NodePath("HostHealth/Digits/1/Sprite2D")
 
 [node name="HostHealth" type="TextureProgressBar" parent="CanvasLayer/Control/HealthUI"]
@@ -57,7 +60,6 @@ offset_left = 1.0
 offset_top = 1.0
 offset_right = 61.0
 offset_bottom = 9.0
-value = 50.0
 nine_patch_stretch = true
 texture_progress = ExtResource("5_sjbhb")
 
@@ -70,6 +72,12 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
+
+[node name="NoHost" type="Control" parent="CanvasLayer/Control/HealthUI/HostHealth/Digits"]
+layout_mode = 2
+
+[node name="Nohost" type="Sprite2D" parent="CanvasLayer/Control/HealthUI/HostHealth/Digits/NoHost"]
+texture = ExtResource("7_k67ve")
 
 [node name="100" type="Control" parent="CanvasLayer/Control/HealthUI/HostHealth/Digits"]
 custom_minimum_size = Vector2(1, 0)
