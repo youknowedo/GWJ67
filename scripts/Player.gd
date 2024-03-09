@@ -1,8 +1,10 @@
 extends CharacterBody2D
 
-@onready var ray = $RayCast2D
+signal player_move
 
+@onready var ray = $RayCast2D
 @export var walk_speed = 6.0
+
 const TILE_SIZE = 16
 
 var initial_position = Vector2(0, 0)
@@ -46,3 +48,5 @@ func move(delta):
 		is_moving = false
 	else:
 		position = initial_position + (input_direction * TILE_SIZE * percent_moved_to_next_tile)
+
+		player_move.emit(position, input_direction)
