@@ -1,4 +1,5 @@
-extends CharacterBody2D
+extends Area2D
+class_name Player
 
 signal player_move
 
@@ -13,13 +14,15 @@ var initial_position = Vector2(0, 0)
 var input_direction = Vector2(0, 0)
 var is_moving = false
 var percent_moved_to_next_tile = 0.0
+var host_active = false
+var host: Hostable = null
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
+	position = position.snapped(Vector2.ONE * TILE_SIZE)
+	position += Vector2.ONE * TILE_SIZE / 2
 	initial_position = position
 
 func _physics_process(delta):
-
 	if is_moving == false:
 		process_player_movement_input()
 	elif input_direction != Vector2.ZERO:
@@ -30,6 +33,9 @@ func _physics_process(delta):
 		is_moving = false
 
 func process_player_movement_input():
+	if Input.is_action_pressed("ui_accept"):
+		host = null
+		host_active = false
 	if input_direction.y == 0:
 		input_direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
 	if input_direction.x == 0:
@@ -53,7 +59,14 @@ func move(delta):
 		position = initial_position + (input_direction * TILE_SIZE)
 		percent_moved_to_next_tile = 0.0
 		is_moving = false
+		if host:
+			host_active = true
 	else:
 		position = initial_position + (input_direction * TILE_SIZE * percent_moved_to_next_tile)
 
-		player_move.emit(position, input_direction)
+	player_move.emit(position, input_direction)
+	if host&&host_active:
+		host.position = position
+
+func _on_area_entered(area: Hostable):
+	host = area

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://kvixyxercbpg"]
+
+[ext_resource type="Script" path="res://scripts/Grunt.gd" id="1_pwm30"]
+[ext_resource type="Texture2D" uid="uid://c4p1spsytnp1t" path="res://sprites/pinto.png" id="1_yho0s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvpin"]
+size = Vector2(16, 16)
+
+[node name="Grunt" type="Area2D"]
+script = ExtResource("1_pwm30")
+
+[node name="Pinto" type="Sprite2D" parent="."]
+texture = ExtResource("1_yho0s")
+hframes = 3
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gvpin")
