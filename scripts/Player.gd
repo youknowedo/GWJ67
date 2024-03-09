@@ -21,6 +21,7 @@ var is_moving = false
 var percent_moved_to_next_tile = 0.0
 var host_active = false
 var host: Host = null
+var exit_host = false
 
 func _ready():
 	position = position.snapped(Vector2.ONE * TILE_SIZE)
@@ -29,6 +30,8 @@ func _ready():
 	health_changed.emit(health, 0)
 
 func _physics_process(delta):
+	if Input.is_action_pressed("secondary")&&host&&host_active:
+		exit_host = true
 	if is_moving == false:
 		process_player_movement_input()
 	elif input_direction != Vector2.ZERO:
@@ -39,12 +42,13 @@ func _physics_process(delta):
 		is_moving = false
 
 func process_player_movement_input():
-	if Input.is_action_pressed("ui_accept"):
+	if exit_host:
 		host = null
 		host_active = false
 		ray.set_collision_mask_value(1, false)
 		input_direction = anim_tree.get("parameters/Idle/blend_position")
 		health_changed.emit(health, 0)
+		exit_host = false
 	else:
 		if input_direction.y == 0:
 			input_direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
