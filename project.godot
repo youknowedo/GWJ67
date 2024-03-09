@@ -27,6 +27,10 @@ window/per_pixel_transparency/allowed=true
 
 project/assembly_name="GWJ67"
 
+[gui]
+
+common/snap/snap_2d_vertices_to_pixel=false
+
 [input]
 
 ui_left={
@@ -64,5 +68,4 @@ ui_down={
 
 [rendering]
 
-2d/snap/snap_2d_transforms_to_pixel=true
-2d/snap/snap_2d_vertices_to_pixel=true
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

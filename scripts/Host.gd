@@ -1,5 +1,5 @@
-extends Area2D
-class_name Hostable
+extends CharacterBody2D
+class_name Host
 
 const TILE_SIZE = 16
 

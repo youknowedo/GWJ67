@@ -15,7 +15,7 @@ var input_direction = Vector2(0, 0)
 var is_moving = false
 var percent_moved_to_next_tile = 0.0
 var host_active = false
-var host: Hostable = null
+var host: Host = null
 
 func _ready():
 	position = position.snapped(Vector2.ONE * TILE_SIZE)
@@ -36,6 +36,8 @@ func process_player_movement_input():
 	if Input.is_action_pressed("ui_accept"):
 		host = null
 		host_active = false
+		ray.set_collision_mask_value(1, false)
+
 	if input_direction.y == 0:
 		input_direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
 	if input_direction.x == 0:
@@ -68,5 +70,7 @@ func move(delta):
 	if host&&host_active:
 		host.position = position
 
-func _on_area_entered(area: Hostable):
-	host = area
+func _on_body_entered(area: Host):
+	if host == null:
+		host = area
+	ray.set_collision_mask_value(1, true)
