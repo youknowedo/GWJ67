@@ -1,15 +1,20 @@
 [gd_scene load_steps=3 format=3 uid="uid://b1ftsevu7khup"]
 
-[ext_resource type="Texture2D" uid="uid://bvw8y1frnblwm" path="res://icon.svg" id="1_qkjrr"]
+[ext_resource type="Texture2D" uid="uid://c4p1spsytnp1t" path="res://pinto.png" id="1_ls08p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wdbfb"]
-size = Vector2(126, 126)
+size = Vector2(15, 16)
 
-[node name="CharacterBody2D" type="Area2D"]
+[node name="CharacterBody2D" type="CharacterBody2D"]
 
-[node name="huvudgubbe" type="Sprite2D" parent="."]
-texture = ExtResource("1_qkjrr")
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_ls08p")
+hframes = 3
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 1)
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_wdbfb")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
