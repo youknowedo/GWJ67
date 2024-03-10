@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://b1ftsevu7khup"]
+[gd_scene load_steps=29 format=3 uid="uid://b1ftsevu7khup"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_l72xw"]
 [ext_resource type="Texture2D" uid="uid://vbpuqie36xy6" path="res://sprites/parasite.png" id="2_1o127"]
@@ -334,6 +334,8 @@ _data = {
 "RESET": SubResource("Animation_mtru6")
 }
 
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_e1ri1"]
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q6q67"]
 animation = &"CrawlDown"
 
@@ -387,12 +389,14 @@ advance_condition = &"crawl"
 advance_condition = &"idle"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_gslqr"]
+states/Attack/node = SubResource("AnimationNodeBlendSpace2D_e1ri1")
+states/Attack/position = Vector2(446, 205)
 states/Crawl/node = SubResource("AnimationNodeBlendSpace2D_rnj22")
 states/Crawl/position = Vector2(630, 95)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_6x535")
-states/Idle/position = Vector2(442, 90)
+states/Idle/position = Vector2(443, 95)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_urq40"), "Idle", "Crawl", SubResource("AnimationNodeStateMachineTransition_l2hr5"), "Crawl", "Idle", SubResource("AnimationNodeStateMachineTransition_14thx")]
-graph_offset = Vector2(-337, -66)
+graph_offset = Vector2(-339, 5)
 
 [node name="Player" type="Area2D"]
 script = ExtResource("1_l72xw")
@@ -422,6 +426,7 @@ tree_root = SubResource("AnimationNodeStateMachine_gslqr")
 anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/crawl = false
 parameters/conditions/idle = false
+parameters/Attack/blend_position = Vector2(0.00105822, 0.855556)
 parameters/Crawl/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(-0.296296, -0.0833334)
 

@@ -8,6 +8,7 @@ signal player_died
 @onready var ray = $RayCast2D
 @onready var anim_tree = $AnimationTree
 @onready var anim_state = anim_tree.get("parameters/playback")
+@onready var health_timer = $HealthTimer
 
 const TILE_SIZE = 16
 
@@ -32,17 +33,28 @@ func _ready():
 func _physics_process(delta):
 	if Input.is_action_pressed("secondary")&&host&&host_active:
 		exit_host = true
-	if is_moving == false:
+	if host&&host.dead:
+		return
+
+	if host&&Input.is_action_just_pressed("primary"):
+		host.anim_state.travel("Attack")
+		host._attack(anim_tree.get("parameters/Idle/blend_position"), ray)
+	elif is_moving == false:
 		process_player_movement_input()
 	elif input_direction != Vector2.ZERO:
 		anim_state.travel("Crawl")
+		if host:
+			host.anim_state.travel("Walk")
 		move(delta)
-	else:
+	elif !attack:
 		anim_state.travel("Idle")
+		if host:
+			host.anim_state.travel("Idle")
 		is_moving = false
 
 func process_player_movement_input():
 	if exit_host:
+		host.anim_state.travel("Idle")
 		host = null
 		host_active = false
 		ray.set_collision_mask_value(1, false)
@@ -63,14 +75,25 @@ func process_player_movement_input():
 		anim_tree.set("parameters/Idle/blend_position", input_direction)
 		anim_tree.set("parameters/Crawl/blend_position", input_direction)
 
+		if host:
+			host.anim_tree.set("parameters/Idle/blend_position", input_direction)
+			host.anim_tree.set("parameters/Walk/blend_position", input_direction)
+			host.anim_tree.set("parameters/Attack/blend_position", input_direction)
+
 		if !ray.is_colliding():
 			initial_position = position
 			is_moving = true
 	else:
 		anim_state.travel("Idle")
+		if host:
+			host.anim_state.travel("Idle")
 
 func move(delta):
-	percent_moved_to_next_tile += crawl_speed * delta
+	var movement_factor = 1.0
+	if host:
+		movement_factor = host.movement_factor
+
+	percent_moved_to_next_tile += crawl_speed * movement_factor * delta
 	if percent_moved_to_next_tile >= 1.0:
 		position = initial_position + (input_direction * TILE_SIZE)
 		percent_moved_to_next_tile = 0.0
@@ -88,6 +111,7 @@ func _on_body_entered(area: Host):
 	if host == null:
 		host = area
 		ray.set_collision_mask_value(1, true)
+		health_timer.start()
 		health_changed.emit(health, host.health)
 
 func _on_health_timer_timeout():
@@ -96,10 +120,16 @@ func _on_health_timer_timeout():
 		health += 10
 		if health > max_health:
 			health = max_health
+			health_timer.stop()
+		if host.health <= 0:
+			host.dead = true
+			host.anim_state.travel("Dead")
+
 		health_changed.emit(health, host.health)
 	elif !host:
 		health -= 10
 		health_changed.emit(health, 0)
 
 		if health <= 0:
+			health_timer.stop()
 			player_died.emit()
