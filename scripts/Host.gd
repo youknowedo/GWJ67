@@ -16,5 +16,5 @@ func _ready():
 	position = position.snapped(Vector2.ONE * TILE_SIZE)
 	position += Vector2.ONE * TILE_SIZE / 2
 
-func _attack(_dir: Vector2, _ray: RayCast2D):
+func _attack(_ray: RayCast2D):
 	pass

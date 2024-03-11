@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cslx3uybut6jq" path="res://sprites/nohost.png" id="7_k67ve"]
 
 [node name="Node" type="Node2D"]
+y_sort_enabled = true
 texture_filter = 1
 
 [node name="TileMap" type="TileMap" parent="."]

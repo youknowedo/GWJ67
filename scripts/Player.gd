@@ -22,6 +22,7 @@ var walk_speed = 6.0
 var max_health = 100
 var health = max_health
 
+var current_state = States.IDLE
 var initial_position = Vector2(0, 0)
 var input_direction = Vector2(0, 0)
 var is_moving = false
@@ -40,9 +41,9 @@ func _physics_process(delta):
 	if Input.is_action_pressed("secondary")&&host&&host_active:
 		exit_host = true
 
-	if host&&Input.is_action_just_pressed("primary"):
+	if host&&host.anim_state.get_current_node() != States.ATTACK&&Input.is_action_just_pressed("primary"):
 		change_state(States.ATTACK)
-		host._attack(anim_tree.get("parameters/Idle/blend_position"), ray)
+		host._attack(ray)
 	elif is_moving == false:
 		process_player_movement_input()
 	elif input_direction != Vector2.ZERO:
@@ -112,6 +113,7 @@ func move(delta):
 		host.position = position
 
 func change_state(state: String):
+	current_state = state
 	if host:
 		host.anim_state.travel(state)
 	else:
