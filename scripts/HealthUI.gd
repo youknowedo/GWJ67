@@ -12,9 +12,10 @@ class_name HealthUI
 @export var host_1_control: Control
 @export var host_1_digit: Sprite2D
 
-func _on_player_health_changed(parasite_health: int, host_health: float):
+func _on_player_health_changed(parasite_health: int, host_health: float, host_max_health=100):
 	parasite_health_bar.value = parasite_health
 	host_health_bar.value = host_health
+	host_health_bar.max_value = host_max_health
 
 	var health_100_digit = int(floor(host_health / 100)) % 10
 	if health_100_digit == 0:

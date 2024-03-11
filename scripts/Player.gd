@@ -5,6 +5,12 @@ signal player_move
 signal health_changed
 signal player_died
 
+const States = {
+	IDLE = "Idle",
+	WALK = "Walk",
+	ATTACK = "Attack"
+}
+
 @onready var ray = $RayCast2D
 @onready var anim_tree = $AnimationTree
 @onready var anim_state = anim_tree.get("parameters/playback")
@@ -12,7 +18,7 @@ signal player_died
 
 const TILE_SIZE = 16
 
-var crawl_speed = 6.0
+var walk_speed = 6.0
 var max_health = 100
 var health = max_health
 
@@ -33,67 +39,65 @@ func _ready():
 func _physics_process(delta):
 	if Input.is_action_pressed("secondary")&&host&&host_active:
 		exit_host = true
-	if host&&host.dead:
-		return
 
 	if host&&Input.is_action_just_pressed("primary"):
-		host.anim_state.travel("Attack")
+		change_state(States.ATTACK)
 		host._attack(anim_tree.get("parameters/Idle/blend_position"), ray)
 	elif is_moving == false:
 		process_player_movement_input()
 	elif input_direction != Vector2.ZERO:
-		anim_state.travel("Crawl")
-		if host:
-			host.anim_state.travel("Walk")
+		change_state(States.WALK)
 		move(delta)
-	elif !attack:
-		anim_state.travel("Idle")
-		if host:
-			host.anim_state.travel("Idle")
+	else:
+		change_state(States.IDLE)
 		is_moving = false
 
 func process_player_movement_input():
 	if exit_host:
-		host.anim_state.travel("Idle")
+		change_state(States.IDLE)
+
+		$Sprite2D.show()
 		host = null
 		host_active = false
 		ray.set_collision_mask_value(1, false)
+
 		input_direction = anim_tree.get("parameters/Idle/blend_position")
 		health_changed.emit(health, 0)
 		exit_host = false
-	else:
+		
+	if host&&host.dead:
+		return
+		
+	elif !exit_host:
 		if input_direction.y == 0:
 			input_direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
 		if input_direction.x == 0:
 			input_direction.y = int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
 
 	input_direction.normalized()
-
-	ray.target_position = input_direction * TILE_SIZE
-	ray.force_raycast_update()
 	if input_direction != Vector2.ZERO:
 		anim_tree.set("parameters/Idle/blend_position", input_direction)
-		anim_tree.set("parameters/Crawl/blend_position", input_direction)
+		anim_tree.set("parameters/Walk/blend_position", input_direction)
 
 		if host:
 			host.anim_tree.set("parameters/Idle/blend_position", input_direction)
 			host.anim_tree.set("parameters/Walk/blend_position", input_direction)
 			host.anim_tree.set("parameters/Attack/blend_position", input_direction)
 
+		ray.target_position = input_direction * TILE_SIZE
+		ray.force_raycast_update()
 		if !ray.is_colliding():
 			initial_position = position
 			is_moving = true
 	else:
-		anim_state.travel("Idle")
-		if host:
-			host.anim_state.travel("Idle")
+		change_state(States.IDLE)
 
 func move(delta):
 	var movement_factor = 1.0
 	if host:
 		movement_factor = host.movement_factor
 
-	percent_moved_to_next_tile += crawl_speed * movement_factor * delta
+	percent_moved_to_next_tile += walk_speed * movement_factor * delta
 	if percent_moved_to_next_tile >= 1.0:
 		position = initial_position + (input_direction * TILE_SIZE)
 		percent_moved_to_next_tile = 0.0
@@ -107,14 +111,27 @@ func move(delta):
 	if host&&host_active:
 		host.position = position
 
-func _on_body_entered(area: Host):
+func change_state(state: String):
+	if host:
+		host.anim_state.travel(state)
+	else:
+		anim_state.travel(state)
+
+func _on_body_entered(body: Host):
 	if host == null:
-		host = area
+		$Sprite2D.hide()
+		host = body
 		ray.set_collision_mask_value(1, true)
 		health_timer.start()
-		health_changed.emit(health, host.health)
+
+		if host.dead:
+			health_changed.emit(health, host.health, 10)
+		else:
+			health_changed.emit(health, host.health)
 
 func _on_health_timer_timeout():
+	var host_max_health = 100
+
 	if host&&health < max_health:
 		host.health -= 2
 		health += 10
@@ -122,10 +139,19 @@ func _on_health_timer_timeout():
 			health = max_health
 			health_timer.stop()
 		if host.health <= 0:
-			host.dead = true
-			host.anim_state.travel("Dead")
+			if host.dead:
+				host.queue_free()
+				host = null
+				host_active = false
+				$Sprite2D.show()
+			else:
+				host.health = 10
+				host_max_health = 10
+				health_timer.stop()
+				host.dead = true
+				host.anim_state.travel("Dead")
 
-		health_changed.emit(health, host.health)
+		health_changed.emit(health, host.health, host_max_health)
 	elif !host:
 		health -= 10
 		health_changed.emit(health, 0)

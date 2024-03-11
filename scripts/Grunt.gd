@@ -9,5 +9,6 @@ func _attack(dir: Vector2, ray: RayCast2D):
 		if other is Host:
 			other.health -= attack_damage
 			if other.health <= 0:
+				other.health = 10
 				other.dead = true
 				other.anim_state.travel("Dead")
