@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfrpi5fnmb6m5"]
+
+[ext_resource type="Texture2D" uid="uid://desvmfkyhycrk" path="res://sprites/text.png" id="1_888w4"]
+
+[node name="TextCharacter" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_888w4")
+hframes = 46
+frame = 45

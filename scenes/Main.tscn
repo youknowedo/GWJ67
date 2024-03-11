@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cnqrpery80ys6"]
+[gd_scene load_steps=10 format=3 uid="uid://cnqrpery80ys6"]
 
 [ext_resource type="PackedScene" uid="uid://b1ftsevu7khup" path="res://prefabs/Player.tscn" id="1_i8of0"]
 [ext_resource type="TileSet" uid="uid://tuw6rbxhuq2g" path="res://scenes/Main.tres" id="2_sn23d"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/HealthUI.gd" id="5_w38kq"]
 [ext_resource type="Texture2D" uid="uid://c4ljfexgmjr6p" path="res://sprites/numbers.png" id="7_24utn"]
 [ext_resource type="Texture2D" uid="uid://cslx3uybut6jq" path="res://sprites/nohost.png" id="7_k67ve"]
+[ext_resource type="PackedScene" uid="uid://f14ls0xpn05r" path="res://prefabs/Text.tscn" id="9_1slm2"]
 
 [node name="Node" type="Node2D"]
 y_sort_enabled = true
@@ -26,6 +27,17 @@ position = Vector2(141, 50)
 
 [node name="Grunt2" parent="." instance=ExtResource("3_msbdl")]
 position = Vector2(73, 87)
+
+[node name="Text" parent="." instance=ExtResource("9_1slm2")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 98.0
+offset_top = 66.0
+offset_right = 98.0
+offset_bottom = 66.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
