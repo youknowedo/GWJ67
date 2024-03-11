@@ -8,7 +8,8 @@ signal player_died
 const States = {
 	IDLE = "Idle",
 	WALK = "Walk",
-	ATTACK = "Attack"
+	ATTACK = "Attack",
+	DEAD = "Dead"
 }
 
 @onready var ray = $RayCast2D
@@ -25,6 +26,7 @@ var health = max_health
 var current_state = States.IDLE
 var initial_position = Vector2(0, 0)
 var input_direction = Vector2(0, 0)
+var look_input_direction = Vector2(0, 0)
 var is_moving = false
 var percent_moved_to_next_tile = 0.0
 var host_active = false
@@ -40,12 +42,12 @@ func _ready():
 func _physics_process(delta):
 	if Input.is_action_pressed("secondary")&&host&&host_active:
 		exit_host = true
-
+	
 	if host&&host.anim_state.get_current_node() != States.ATTACK&&Input.is_action_just_pressed("primary"):
 		change_state(States.ATTACK)
 		host._attack(ray)
 	elif is_moving == false:
-		process_player_movement_input()
+			process_player_movement_input()
 	elif input_direction != Vector2.ZERO:
 		change_state(States.WALK)
 		move(delta)
@@ -65,18 +67,18 @@ func process_player_movement_input():
 		input_direction = anim_tree.get("parameters/Idle/blend_position")
 		health_changed.emit(health, 0)
 		exit_host = false
-		
-	if host&&host.dead:
-		return
-		
-	elif !exit_host:
+
+	elif !host||!host.dead:
 		if input_direction.y == 0:
 			input_direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
 		if input_direction.x == 0:
 			input_direction.y = int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
 
-	input_direction.normalized()
+	else:
+		input_direction = Vector2.ZERO
+
 	if input_direction != Vector2.ZERO:
+		input_direction.normalized()
 		anim_tree.set("parameters/Idle/blend_position", input_direction)
 		anim_tree.set("parameters/Walk/blend_position", input_direction)
 
@@ -87,7 +89,7 @@ func process_player_movement_input():
 
 		ray.target_position = input_direction * TILE_SIZE
 		ray.force_raycast_update()
-		if !ray.is_colliding():
+		if !Input.is_action_pressed("tetriary")&&!ray.is_colliding():
 			initial_position = position
 			is_moving = true
 	else:
@@ -103,8 +105,9 @@ func move(delta):
 		position = initial_position + (input_direction * TILE_SIZE)
 		percent_moved_to_next_tile = 0.0
 		is_moving = false
-		if host:
+		if host&&!host_active:
 			host_active = true
+			$Sprite2D.hide()
 	else:
 		position = initial_position + (input_direction * TILE_SIZE * percent_moved_to_next_tile)
 
@@ -115,13 +118,15 @@ func move(delta):
 func change_state(state: String):
 	current_state = state
 	if host:
-		host.anim_state.travel(state)
+		if host.dead:
+			host.anim_state.travel(States.DEAD)
+		else:
+			host.anim_state.travel(state)
 	else:
 		anim_state.travel(state)
 
 func _on_body_entered(body: Host):
 	if host == null:
-		$Sprite2D.hide()
 		host = body
 		ray.set_collision_mask_value(1, true)
 		health_timer.start()
@@ -137,6 +142,9 @@ func _on_health_timer_timeout():
 	if host&&health < max_health:
 		host.health -= 2
 		health += 10
+		if host.dead:
+			host_max_health = 10
+
 		if health > max_health:
 			health = max_health
 			health_timer.stop()
@@ -145,7 +153,11 @@ func _on_health_timer_timeout():
 				host.queue_free()
 				host = null
 				host_active = false
+				ray.set_collision_mask_value(1, false)
 				$Sprite2D.show()
+
+				health_changed.emit(health, 0)
+				return
 			else:
 				host.health = 10
 				host_max_health = 10

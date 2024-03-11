@@ -396,6 +396,7 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-339, 5)
 
 [node name="Player" type="Area2D"]
+z_index = -1
 script = ExtResource("1_l72xw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
