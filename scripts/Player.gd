@@ -57,14 +57,23 @@ func _physics_process(delta):
 
 func process_player_movement_input():
 	if exit_host:
+		$Sprite2D.show()
 		change_state(States.IDLE)
 
-		$Sprite2D.show()
-		host = null
-		host_active = false
 		ray.set_collision_mask_value(1, false)
 
-		input_direction = anim_tree.get("parameters/Idle/blend_position")
+		input_direction = host.anim_tree.get("parameters/Idle/blend_position")
+
+		var directions = [input_direction, Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
+		for dir in directions:
+			ray.target_position = dir * TILE_SIZE
+			ray.force_raycast_update()
+			if !ray.is_colliding():
+				input_direction = dir
+				break
+
+		host = null
+		host_active = false
 		health_changed.emit(health, 0)
 		exit_host = false
 
