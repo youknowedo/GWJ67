@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp0si4n5qf2wg"]
+
+[ext_resource type="Script" path="res://scripts/CameraTrigger.gd" id="1_5d8s1"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_lr56i"]
+a = Vector2(-8, 0)
+b = Vector2(8, 0)
+
+[node name="CameraController" type="Node2D"]
+script = ExtResource("1_5d8s1")
+
+[node name="Continue" type="Area2D" parent="."]
+position = Vector2(0, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Continue"]
+shape = SubResource("SegmentShape2D_lr56i")
+debug_color = Color(0, 0.647059, 0.180392, 0.419608)
+
+[node name="Back" type="Area2D" parent="."]
+position = Vector2(0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Back"]
+shape = SubResource("SegmentShape2D_lr56i")
+debug_color = Color(0.996078, 0, 0.152941, 0.419608)
+
+[connection signal="area_entered" from="Continue" to="." method="_on_continue_area_entered"]
+[connection signal="area_exited" from="Continue" to="." method="_on_continue_area_exited"]
+[connection signal="area_entered" from="Back" to="." method="_on_back_area_entered"]
+[connection signal="area_exited" from="Back" to="." method="_on_back_area_exited"]

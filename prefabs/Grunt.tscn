@@ -547,5 +547,5 @@ parameters/conditions/attack = false
 parameters/conditions/idle = false
 parameters/conditions/walk = false
 parameters/Attack/blend_position = Vector2(0, 0)
-parameters/Idle/blend_position = Vector2(0, 0)
+parameters/Idle/blend_position = Vector2(0.00800002, -0.460317)
 parameters/Walk/blend_position = Vector2(0, 0)
