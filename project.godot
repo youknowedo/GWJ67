@@ -24,7 +24,6 @@ DiscordSDKLoader="*res://addons/discord-sdk-gd/nodes/discord_autoload.gd"
 window/size/viewport_width=256
 window/size/viewport_height=256
 window/stretch/mode="viewport"
-window/stretch/scale_mode="integer"
 window/per_pixel_transparency/allowed=true
 
 [dotnet]
