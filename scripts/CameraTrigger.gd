@@ -4,23 +4,40 @@ extends Node2D
 @onready var continue_area: Area2D = $Continue
 @onready var back_area: Area2D = $Back
 
-var continue_to_next = false
-var back_to_previous = false
+var action = ""
+var inside_other = false
 
 func _on_continue_area_entered(area: Area2D):
-	if !back_to_previous&&area is Player:
-		continue_to_next = true
-		game_controller.next_room()
-
-func _on_continue_area_exited(area: Area2D):
+	print("entered continue", inside_other, " ", action)
 	if area is Player:
-		continue_to_next = false
+		if action == "":
+			action = "continue"
+		else:
+			inside_other = true
+func _on_continue_area_exited(area: Area2D):
+	print("exited continue", inside_other, " ", action)
+	if area is Player:
+		if action == "continue":
+			if inside_other:
+				game_controller.next_room()
+			action = ""
+		else:
+			inside_other = false
 
 func _on_back_area_entered(area: Area2D):
-	if !continue_to_next&&area is Player:
-		back_to_previous = true
-		game_controller.previous_room()
+	print("entered back", inside_other, " ", action)
+	if area is Player:
+		if action == "":
+			action = "back"
+		else:
+			inside_other = true
 
 func _on_back_area_exited(area: Area2D):
+	print("exited back ", inside_other, " ", action)
 	if area is Player:
-		back_to_previous = false
+		if action == "back":
+			if inside_other:
+				game_controller.previous_room()
+			action = ""
+		else:
+			inside_other = false

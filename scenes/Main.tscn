@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://cq7bwoqn6xemn"]
 
 [ext_resource type="PackedScene" uid="uid://hw103vyho245" path="res://prefabs/Player.tscn" id="1_i8of0"]
-[ext_resource type="Script" path="res://scenes/Control.gd" id="1_kqbs3"]
+[ext_resource type="Script" path="res://scripts/GameControl.gd" id="1_kqbs3"]
 [ext_resource type="TileSet" uid="uid://tuw6rbxhuq2g" path="res://scenes/Main.tres" id="2_sn23d"]
 [ext_resource type="PackedScene" uid="uid://kvixyxercbpg" path="res://prefabs/Grunt.tscn" id="3_msbdl"]
 [ext_resource type="Texture2D" uid="uid://ctgwv28mi3o1w" path="res://sprites/HUD.png" id="4_qes08"]
@@ -10,20 +10,16 @@
 [ext_resource type="PackedScene" uid="uid://bp0si4n5qf2wg" path="res://prefabs/CameraTrigger.tscn" id="8_aoniw"]
 [ext_resource type="PackedScene" uid="uid://f14ls0xpn05r" path="res://prefabs/Text.tscn" id="9_1slm2"]
 
-[node name="GameControl" type="Node2D" node_paths=PackedStringArray("lerp_camera", "room_cameras")]
+[node name="GameControl" type="Node2D" node_paths=PackedStringArray("room_cameras")]
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_kqbs3")
-lerp_camera = NodePath("LerpCamera")
-room_cameras = [NodePath("Room1/Camera2D"), NodePath("Room2/Camera2D")]
-camera_transition_time = 6.0
-
-[node name="LerpCamera" type="Camera2D" parent="."]
+room_cameras = [NodePath("Room1/Camera2D"), NodePath("Room2/Camera2D"), NodePath("Room3/Camera2D")]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_sn23d")
 format = 2
-layer_0/tile_data = PackedInt32Array(524289, 327682, 1, 458753, 2, 5, 589838, 2, 5, 917518, 327682, 1, 851982, 2, 5, 786446, 2, 5, 720910, 2, 5, 655374, 2, 5, 262158, 2, 5, 327694, 2, 5, 393230, 393218, 1, 65550, 327682, 0, 131086, 2, 5, 196622, 2, 5, 65556, 131074, 3, 65555, 65538, 3, 65554, 65538, 3, 917526, 131074, 3, 917525, 65538, 3, 917524, 65538, 3, 917523, 65538, 3, 917522, 65538, 3, 917521, 65538, 3, 917520, 65538, 3, 917519, 65538, 3, 393229, 65538, 3, 393228, 65538, 3, 393227, 65538, 3, 393226, 65538, 3, 393225, 65538, 3, 393224, 65538, 3, 393223, 65538, 3, 393222, 65538, 3, 393221, 65538, 3, 393220, 65538, 3, 393219, 65538, 3, 393218, 65538, 3, 393217, 327682, 0, 524290, 65538, 3, 524291, 65538, 3, 524292, 65538, 3, 524293, 65538, 3, 524294, 65538, 3, 524295, 65538, 3, 524296, 65538, 3, 524297, 65538, 3, 524298, 65538, 3, 524299, 65538, 3, 524300, 65538, 3, 524301, 65538, 3, 524302, 393218, 0, 65553, 65538, 3, 65552, 65538, 3, 65551, 65538, 3)
+layer_0/tile_data = PackedInt32Array(458753, 2, 5, 393230, 65538, 3, 393229, 65538, 3, 393228, 65538, 3, 393227, 65538, 3, 393226, 65538, 3, 393225, 65538, 3, 393224, 65538, 3, 393223, 65538, 3, 393222, 65538, 3, 393221, 65538, 3, 393220, 65538, 3, 393219, 65538, 3, 393218, 65538, 3, 393217, 327682, 0, 524290, 65538, 3, 524291, 65538, 3, 524292, 65538, 3, 524293, 65538, 3, 524294, 65538, 3, 524295, 65538, 3, 524296, 65538, 3, 524297, 65538, 3, 524298, 65538, 3, 524299, 65538, 3, 524300, 65538, 3, 524301, 65538, 3, 524302, 65538, 3, 524303, 65538, 3, 524304, 65538, 3, 524305, 65538, 3, 524306, 65538, 3, 524307, 393218, 0, 589844, 65538, 3, 524312, 65538, 3, 589846, 65538, 3, 589847, 393218, 1, 524313, 65538, 3, 524314, 65538, 3, 524315, 65538, 3, 524316, 65538, 3, 393231, 65538, 3, 393232, 65538, 3, 393233, 65538, 3, 393234, 65538, 3, 393235, 393218, 1, 327700, 65538, 3, 327701, 65538, 3, 327702, 65538, 3, 327703, 393218, 0, 393242, 65538, 3, 393243, 65538, 3, 393244, 65538, 3, 589843, 327682, 1, 589845, 65538, 3, 524311, 327682, 0, 327699, 327682, 0, 393239, 327682, 1, 393240, 65538, 3, 393241, 65538, 3, 524289, 327682, 1, 524317, 65538, 3, 393245, 65538, 3, 524318, 65538, 3, 393246, 65538, 3, 524319, 65538, 3, 524320, 393218, 0, 589856, 2, 5, 393247, 65538, 3, 393248, 393218, 1, 327712, 2, 5, 655392, 327682, 1, 655393, 65538, 3, 655394, 65538, 3, 655395, 65538, 3, 655396, 65538, 3, 655397, 65538, 3, 262180, 327682, 1, 196644, 2, 4, 262178, 393218, 1, 196642, 2, 4, 458790, 2, 5, 327718, 2, 5, 393254, 2, 5, 524326, 2, 5, 589862, 2, 5, 655398, 393218, 1, 262177, 65538, 3, 262176, 327682, 0, 262181, 65538, 3, 262182, 393218, 0)
 
 [node name="Player" parent="." instance=ExtResource("1_i8of0")]
 position = Vector2(35, 119)
@@ -96,9 +92,22 @@ game_controller = NodePath("../..")
 [node name="Room2" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="Room2"]
-position = Vector2(336, 128)
+position = Vector2(344, 128)
 
 [node name="Grunt" parent="Room2" instance=ExtResource("3_msbdl")]
-position = Vector2(362, 113)
+position = Vector2(343, 118)
+
+[node name="Room3" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Room3"]
+position = Vector2(554, 128)
+
+[node name="CameraCrigger" parent="Room3" node_paths=PackedStringArray("game_controller") instance=ExtResource("8_aoniw")]
+position = Vector2(450, 120)
+rotation = -1.5708
+game_controller = NodePath("../..")
+
+[node name="Grunt" parent="." instance=ExtResource("3_msbdl")]
+position = Vector2(567, 117)
 
 [connection signal="health_changed" from="Player" to="CanvasLayer/Control/HealthUI" method="_on_player_health_changed"]
