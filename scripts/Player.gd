@@ -75,7 +75,7 @@ func process_player_movement_input():
 		health_changed.emit(health, 0)
 		exit_host = false
 
-	elif !host||!host.dead:
+	elif !host||host.state != "Dead":
 		if input_direction.y == 0:
 			input_direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
 		if input_direction.x == 0:
@@ -96,6 +96,7 @@ func process_player_movement_input():
 
 		ray.target_position = input_direction * TILE_SIZE
 		ray.force_raycast_update()
+		print(!Input.is_action_pressed("tetriary"), !ray.is_colliding())
 		if !Input.is_action_pressed("tetriary")&&!ray.is_colliding():
 			initial_position = position
 			is_moving = true
@@ -103,6 +104,7 @@ func process_player_movement_input():
 		change_state(States.IDLE)
 
 func move(delta):
+	print("Moving")
 	var movement_factor = 1.0
 	if host:
 		movement_factor = host.movement_factor
@@ -125,7 +127,7 @@ func move(delta):
 func change_state(state: String):
 	current_state = state
 	if host:
-		if host.dead:
+		if host.state == "Dead":
 			host.anim_state.travel(States.DEAD)
 		else:
 			host.anim_state.travel(state)
@@ -138,7 +140,7 @@ func _on_body_entered(body: Host):
 		ray.set_collision_mask_value(1, true)
 		health_timer.start()
 
-		if host.dead:
+		if host.state == "Dead":
 			health_changed.emit(health, host.health, 10)
 		else:
 			health_changed.emit(health, host.health)
@@ -149,14 +151,14 @@ func _on_health_timer_timeout():
 	if host&&health < max_health:
 		host.health -= 2
 		health += 10
-		if host.dead:
+		if host.state == "Dead":
 			host_max_health = 10
 
 		if health > max_health:
 			health = max_health
 			health_timer.stop()
 		if host.health <= 0:
-			if host.dead:
+			if host.state == "Dead":
 				host.queue_free()
 				host = null
 				host_active = false
@@ -169,7 +171,7 @@ func _on_health_timer_timeout():
 				host.health = 10
 				host_max_health = 10
 				health_timer.stop()
-				host.dead = true
+				host.state = "Dead"
 				host.anim_state.travel("Dead")
 
 		health_changed.emit(health, host.health, host_max_health)
