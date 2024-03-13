@@ -519,6 +519,7 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-634, -114)
 
 [node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("anim_tree")]
+y_sort_enabled = true
 script = ExtResource("1_xglap")
 anim_tree = NodePath("AnimationTree")
 

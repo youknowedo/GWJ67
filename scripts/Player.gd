@@ -34,8 +34,6 @@ var host: Host = null
 var exit_host = false
 
 func _ready():
-	position = position.snapped(Vector2.ONE * TILE_SIZE)
-	position += Vector2.ONE * TILE_SIZE / 2
 	initial_position = position
 	health_changed.emit(health, 0)
 
