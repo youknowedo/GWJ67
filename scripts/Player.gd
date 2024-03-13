@@ -1,15 +1,15 @@
 extends Area2D
 class_name Player
 
-signal player_move
 signal health_changed
+signal player_move
+signal player_attack
 signal player_died
 
 const States = {
 	IDLE = "Idle",
 	WALK = "Walk",
-	ATTACK = "Attack",
-	DEAD = "Dead"
+	ATTACK = "Attack"
 }
 
 @onready var ray = $RayCast2D
@@ -43,7 +43,7 @@ func _physics_process(delta):
 	
 	if host&&host.anim_state.get_current_node() != States.ATTACK&&Input.is_action_just_pressed("primary"):
 		change_state(States.ATTACK)
-		host._attack(ray)
+		host._attack()
 	elif is_moving == false:
 			process_player_movement_input()
 	elif input_direction != Vector2.ZERO:
@@ -57,6 +57,7 @@ func process_player_movement_input():
 	if exit_host:
 		$Sprite2D.show()
 		change_state(States.IDLE)
+		host.state = Host.States.SEARCH
 
 		ray.set_collision_mask_value(1, false)
 
@@ -96,7 +97,6 @@ func process_player_movement_input():
 
 		ray.target_position = input_direction * TILE_SIZE
 		ray.force_raycast_update()
-		print(!Input.is_action_pressed("tetriary"), !ray.is_colliding())
 		if !Input.is_action_pressed("tetriary")&&!ray.is_colliding():
 			initial_position = position
 			is_moving = true
@@ -104,7 +104,6 @@ func process_player_movement_input():
 		change_state(States.IDLE)
 
 func move(delta):
-	print("Moving")
 	var movement_factor = 1.0
 	if host:
 		movement_factor = host.movement_factor
@@ -127,8 +126,8 @@ func move(delta):
 func change_state(state: String):
 	current_state = state
 	if host:
-		if host.state == "Dead":
-			host.anim_state.travel(States.DEAD)
+		if host.state == Host.States.DEAD:
+			host.anim_state.travel(Host.States.DEAD)
 		else:
 			host.anim_state.travel(state)
 	else:
@@ -140,9 +139,10 @@ func _on_body_entered(body: Host):
 		ray.set_collision_mask_value(1, true)
 		health_timer.start()
 
-		if host.state == "Dead":
+		if host.state == Host.States.DEAD:
 			health_changed.emit(health, host.health, 10)
 		else:
+			host.state = Host.States.CONTROLLED
 			health_changed.emit(health, host.health)
 
 func _on_health_timer_timeout():
@@ -151,14 +151,14 @@ func _on_health_timer_timeout():
 	if host&&health < max_health:
 		host.health -= 2
 		health += 10
-		if host.state == "Dead":
+		if host.state == Host.States.DEAD:
 			host_max_health = 10
 
 		if health > max_health:
 			health = max_health
 			health_timer.stop()
 		if host.health <= 0:
-			if host.state == "Dead":
+			if host.state == Host.States.DEAD:
 				host.queue_free()
 				host = null
 				host_active = false
@@ -171,7 +171,7 @@ func _on_health_timer_timeout():
 				host.health = 10
 				host_max_health = 10
 				health_timer.stop()
-				host.state = "Dead"
+				host.state = Host.States.DEAD
 				host.anim_state.travel("Dead")
 
 		health_changed.emit(health, host.health, host_max_health)

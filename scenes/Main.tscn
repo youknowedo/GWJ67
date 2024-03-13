@@ -79,17 +79,20 @@ nine_patch_stretch = true
 texture_progress = ExtResource("5_sjbhb")
 tint_progress = Color(0.698039, 0.0627451, 0.188235, 1)
 
-[node name="Grunt" parent="." instance=ExtResource("3_msbdl")]
+[node name="Grunt" parent="." node_paths=PackedStringArray("tile_map") groups=["Host"] instance=ExtResource("3_msbdl")]
 position = Vector2(216, 120)
+tile_map = NodePath("../TileMap")
 start_health = 4
 state = "Dead"
 
-[node name="Grunt2" parent="." instance=ExtResource("3_msbdl")]
+[node name="Grunt2" parent="." node_paths=PackedStringArray("tile_map") groups=["Host"] instance=ExtResource("3_msbdl")]
 z_as_relative = false
 position = Vector2(344, 120)
+tile_map = NodePath("../TileMap")
 
-[node name="Grunt3" parent="." instance=ExtResource("3_msbdl")]
+[node name="Grunt3" parent="." node_paths=PackedStringArray("tile_map") groups=["Host"] instance=ExtResource("3_msbdl")]
 position = Vector2(568, 120)
+tile_map = NodePath("../TileMap")
 
 [node name="Room1" type="Node2D" parent="."]
 
