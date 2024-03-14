@@ -130,4 +130,8 @@ game_controller = NodePath("../..")
 [node name="Camera2D" type="Camera2D" parent="Room4"]
 position = Vector2(568, -88)
 
+[node name="Grunt4" parent="." node_paths=PackedStringArray("tile_map") groups=["Host"] instance=ExtResource("3_msbdl")]
+position = Vector2(599, 88)
+tile_map = NodePath("../TileMap")
+
 [connection signal="health_changed" from="Player" to="CanvasLayer/Control/HealthUI" method="_on_player_health_changed"]

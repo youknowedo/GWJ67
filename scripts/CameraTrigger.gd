@@ -8,14 +8,12 @@ var action = ""
 var inside_other = false
 
 func _on_continue_area_entered(area: Area2D):
-	print("entered continue", inside_other, " ", action)
 	if area is Player:
 		if action == "":
 			action = "continue"
 		else:
 			inside_other = true
 func _on_continue_area_exited(area: Area2D):
-	print("exited continue", inside_other, " ", action)
 	if area is Player:
 		if action == "continue":
 			if inside_other:
@@ -25,7 +23,6 @@ func _on_continue_area_exited(area: Area2D):
 			inside_other = false
 
 func _on_back_area_entered(area: Area2D):
-	print("entered back", inside_other, " ", action)
 	if area is Player:
 		if action == "":
 			action = "back"
@@ -33,7 +30,6 @@ func _on_back_area_entered(area: Area2D):
 			inside_other = true
 
 func _on_back_area_exited(area: Area2D):
-	print("exited back ", inside_other, " ", action)
 	if area is Player:
 		if action == "back":
 			if inside_other:
