@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://degda4xpfigwt"]
+
+[ext_resource type="Script" path="res://TextTrigger.gd" id="1_ib8f1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_10nxe"]
+size = Vector2(12, 12)
+
+[node name="TextTrigger" type="Area2D"]
+script = ExtResource("1_ib8f1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_10nxe")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -12,6 +12,8 @@ const States = {
 	ATTACK = "Attack"
 }
 
+@export var text_controller: TextController
+
 @onready var ray = $RayCast2D
 @onready var anim_tree = $AnimationTree
 @onready var anim_state = anim_tree.get("parameters/playback")
