@@ -518,12 +518,12 @@ states/Walk/position = Vector2(388, 118)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_024la"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_75aau"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_efuww"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_g5uh4"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_icswn"), "Idle", "Dead", SubResource("AnimationNodeStateMachineTransition_5712m"), "Dead", "Idle", SubResource("AnimationNodeStateMachineTransition_eldfe")]
 graph_offset = Vector2(-634, -114)
 
-[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("ray", "anim_tree", "reveal_position_timer")]
+[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("attack_timer", "ray", "anim_tree")]
 y_sort_enabled = true
 script = ExtResource("1_xglap")
+attack_timer = NodePath("Timer")
 ray = NodePath("RayCast2D")
 anim_tree = NodePath("AnimationTree")
-reveal_position_timer = NodePath("RevealPositionTimer")
 
 [node name="Pinto" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -550,11 +550,9 @@ parameters/conditions/attack = false
 parameters/conditions/idle = false
 parameters/conditions/walk = false
 parameters/Attack/blend_position = Vector2(0, 0)
-parameters/Idle/blend_position = Vector2(0.00800002, -0.460317)
+parameters/Idle/blend_position = Vector2(-0.997884, -0.0277778)
 parameters/Walk/blend_position = Vector2(0, 0)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-collision_mask = 3
 
-[node name="RevealPositionTimer" type="Timer" parent="."]
-autostart = true
+[node name="Timer" type="Timer" parent="."]

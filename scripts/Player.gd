@@ -60,7 +60,6 @@ func process_player_movement_input():
 		host.state = Host.States.SEARCH
 
 		ray.set_collision_mask_value(1, false)
-		host.set_collision_layer_value(2, false)
 
 		input_direction = host.anim_tree.get("parameters/Idle/blend_position")
 
@@ -138,7 +137,6 @@ func _on_body_entered(body: Host):
 	if host == null:
 		host = body
 		ray.set_collision_mask_value(1, true)
-		host.set_collision_layer_value(2, true)
 		health_timer.start()
 
 		if host.state == Host.States.DEAD:
@@ -165,7 +163,6 @@ func _on_health_timer_timeout():
 				host = null
 				host_active = false
 				ray.set_collision_mask_value(1, false)
-				host.set_collision_layer_value(2, false)
 				$Sprite2D.show()
 
 				health_changed.emit(health, 0)
