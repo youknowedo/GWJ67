@@ -45,7 +45,6 @@ func _process(delta):
 	ray.force_raycast_update()
 
 	var collider = ray.get_collider()
-	print(collider)
 	if collider:
 		if collider is Host:
 			host_in_range(collider)
@@ -57,6 +56,7 @@ func take_damage(damage: int):
 	if health <= 0:
 		health = 10
 		state = States.DEAD
+		anim_state.travel("Dead")
 
 func _attack():
 	pass

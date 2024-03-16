@@ -56,12 +56,18 @@ func _physics_process(delta):
 func process_player_movement_input():
 	if exit_host:
 		$Sprite2D.show()
-		change_state(States.IDLE)
-		host.state = Host.States.SEARCH
+		if host.state != Host.States.DEAD:
+			change_state(States.IDLE)
+			host.state = Host.States.SEARCH
 
 		ray.set_collision_mask_value(1, false)
 
-		input_direction = host.anim_tree.get("parameters/Idle/blend_position")
+		input_direction = host.anim_tree.get("parameters/Idle/blend_position").round()
+		
+		health_changed.emit(health, 0)
+		host = null
+		host_active = false
+		exit_host = false
 
 		var directions = [input_direction, Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
 		for dir in directions:
@@ -71,16 +77,11 @@ func process_player_movement_input():
 				input_direction = dir
 				break
 
-		host = null
-		host_active = false
-		health_changed.emit(health, 0)
-		exit_host = false
-
 	elif !host||host.state != "Dead":
 		if input_direction.y == 0:
-			input_direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
+			input_direction.x = (int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left")))
 		if input_direction.x == 0:
-			input_direction.y = int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
+			input_direction.y = (int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up")))
 
 	else:
 		input_direction = Vector2.ZERO

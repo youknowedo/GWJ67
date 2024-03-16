@@ -3,7 +3,7 @@ class_name Grunt
 
 @export var attack_timer: Timer
 
-func _ready():
+func ready():
 	attack_timer.connect("timeout", _attack)
 
 func _attack():
