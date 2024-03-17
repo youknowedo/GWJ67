@@ -89,6 +89,8 @@ func take_damage(damage: int, by: Host):
 	if state == States.CONTROLLED:
 		player.health_changed.emit(player.health, health, max_health)
 
+	damage_taken()
+
 func _attack():
 	pass
 
@@ -96,4 +98,7 @@ func host_in_range():
 	pass
 	
 func host_left_range():
+	pass
+
+func damage_taken():
 	pass

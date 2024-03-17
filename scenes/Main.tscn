@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://brxkt3n7nj54y" path="res://sprites/textbox.png" id="5_8nq04"]
 [ext_resource type="Texture2D" uid="uid://d2n44qjryk4ol" path="res://sprites/white.png" id="5_sjbhb"]
 [ext_resource type="Script" path="res://scripts/HealthUI.gd" id="5_w38kq"]
-[ext_resource type="Script" path="res://scenes/TextController.gd" id="6_wdbvj"]
+[ext_resource type="Script" path="res://scripts/TextController.gd" id="6_wdbvj"]
 [ext_resource type="PackedScene" uid="uid://bp0si4n5qf2wg" path="res://prefabs/CameraTrigger.tscn" id="8_aoniw"]
 [ext_resource type="PackedScene" uid="uid://f14ls0xpn05r" path="res://prefabs/Text.tscn" id="9_1slm2"]
 [ext_resource type="PackedScene" uid="uid://degda4xpfigwt" path="res://prefabs/TextTrigger.tscn" id="12_w70my"]
@@ -173,5 +173,21 @@ state = "Dead"
 
 [node name="Shooter2" parent="." instance=ExtResource("14_yeovp")]
 position = Vector2(503, -120)
+
+[node name="TextTrigger3" parent="." node_paths=PackedStringArray("text_controller") instance=ExtResource("12_w70my")]
+position = Vector2(503, 120)
+text_controller = NodePath("../CanvasLayer/Control/TextController")
+text = "Look! There's another person! Click (K) to
+exit your current host to get into
+that one!"
+
+[node name="TextTrigger4" parent="." node_paths=PackedStringArray("text_controller") instance=ExtResource("12_w70my")]
+position = Vector2(567, -8)
+text_controller = NodePath("../CanvasLayer/Control/TextController")
+text = "i didn't get further than this lol.
+forgot i entered the jam. anyways,
+this guy instakills the big guy, which
+kills the small one which kills this
+guy. have fun!"
 
 [connection signal="health_changed" from="Player" to="CanvasLayer/Control/HealthUI" method="_on_player_health_changed"]

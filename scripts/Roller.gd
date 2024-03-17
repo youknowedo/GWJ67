@@ -34,13 +34,12 @@ func _attack():
 		anim_state.travel("Idle")
 		stop_looking = true
 
-		print(body, "hi")
 		if body is Host&&body.state != States.DEAD:
 			if body is Shooter:
 				body.take_damage(100, self)
-			if body is Shooter:
-				body.take_damage(10, self)
 			if body is Grunt:
+				body.take_damage(10, self)
+			if body is Roller:
 				body.take_damage(30, self)
 	else:
 		initial_position = position
@@ -51,5 +50,7 @@ func host_in_range():
 		_attack()
 
 func host_left_range():
-	print("Host left range")
+	stop_looking = false
+
+func damage_taken():
 	stop_looking = false

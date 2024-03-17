@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://cutplvjkyb40r"]
 
-[ext_resource type="Script" path="res://Shot.gd" id="1_rs5f4"]
+[ext_resource type="Script" path="res://scripts/Shot.gd" id="1_gjtvc"]
 [ext_resource type="Texture2D" uid="uid://bog42spoatx13" path="res://sprites/shooter.png" id="2_v0p4x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m0pdg"]
 size = Vector2(2, 2)
 
 [node name="Shot" type="Area2D"]
-script = ExtResource("1_rs5f4")
+script = ExtResource("1_gjtvc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
