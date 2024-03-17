@@ -7,10 +7,15 @@ func _attack():
 	ray.target_position = anim_tree.get("parameters/Idle/blend_position") * 32 * see_distance
 	ray.force_raycast_update()
 	if ray.is_colliding():
-		var other = ray.get_collider()
+		var body = ray.get_collider()
 
-		if other is Host&&other.state != States.DEAD:
-			other.take_damage(10, self)
+		if body is Host&&body.state != States.DEAD:
+			if body is Roller:
+				body.take_damage(100, self)
+			if body is Shooter:
+				body.take_damage(10, self)
+			if body is Grunt:
+				body.take_damage(30, self)
 
 func host_in_range():
 	attack = true
