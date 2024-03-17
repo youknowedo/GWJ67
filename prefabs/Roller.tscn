@@ -1,6 +1,6 @@
 [gd_scene load_steps=43 format=3 uid="uid://bixvqlrbcaduf"]
 
-[ext_resource type="Script" path="res://prefabs/Roller.gd" id="1_ucmv4"]
+[ext_resource type="Script" path="res://scripts/Roller.gd" id="1_u6c2g"]
 [ext_resource type="Texture2D" uid="uid://ddnmogjafimfb" path="res://sprites/roller.png" id="2_p1a8t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvpin"]
@@ -520,9 +520,10 @@ graph_offset = Vector2(-272, -116)
 
 [node name="Roller" type="CharacterBody2D" node_paths=PackedStringArray("ray", "anim_tree")]
 y_sort_enabled = true
-script = ExtResource("1_ucmv4")
+script = ExtResource("1_u6c2g")
 ray = NodePath("RayCast2D")
 anim_tree = NodePath("AnimationTree")
+see_distance = 6
 
 [node name="Pinto" type="Sprite2D" parent="."]
 texture_filter = 1

@@ -9,12 +9,14 @@ var is_moving = false
 func process(delta):
 	if roll:
 		anim_state.travel("Walk")
-		percent_moved_to_next_tile += 10 * movement_factor * delta
+		percent_moved_to_next_tile += 10 * delta
+		print(percent_moved_to_next_tile)
 		if percent_moved_to_next_tile >= 1.0:
 			position = initial_position + (anim_tree.get("parameters/Idle/blend_position").round() * TILE_SIZE)
 			percent_moved_to_next_tile = 0.0
 			roll = false
 			_attack()
+			print(initial_position)
 		else:
 			position = initial_position + (anim_tree.get("parameters/Idle/blend_position").round() * TILE_SIZE * percent_moved_to_next_tile)
 		
@@ -35,10 +37,6 @@ func _attack():
 		initial_position = position
 		roll = true
 
-	print(ray.get_collider())
-
 func host_in_range(host: Host):
-	attack = true
-
-func host_left_range(host: Host):
-	attack = false
+	if !roll:
+		_attack()
