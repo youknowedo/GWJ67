@@ -12,10 +12,10 @@ func _attack():
 		if other is Host&&other.state != States.DEAD:
 			other.take_damage(10, self)
 
-func host_in_range(host: Host):
+func host_in_range():
 	attack = true
 
-func host_left_range(host: Host):
+func host_left_range():
 	attack = false
 
 func _on_attack_timer_timeout():

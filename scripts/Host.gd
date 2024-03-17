@@ -63,11 +63,11 @@ func _process(delta):
 	if collider:
 		if collider is Host:
 			if collider.state == States.DEAD:
-				host_left_range(collider)
+				host_left_range()
 			else:
-				host_in_range(collider)
+				host_in_range()
 	else:
-		host_left_range(collider)
+		host_left_range()
 
 func process(_delta):
 	pass
@@ -90,8 +90,8 @@ func take_damage(damage: int, by: Host):
 func _attack():
 	pass
 
-func host_in_range(_host: Host):
+func host_in_range():
 	pass
 	
-func host_left_range(_host: Host):
+func host_left_range():
 	pass

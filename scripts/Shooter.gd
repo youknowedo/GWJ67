@@ -12,10 +12,10 @@ func _attack():
 
 	get_tree().get_root().get_node("GameControl").add_child(new_shot)
 
-func host_in_range(host: Host):
+func host_in_range():
 	attack = true
 
-func host_left_range(host: Host):
+func host_left_range():
 	attack = false
 
 func _on_attack_timer_timeout():

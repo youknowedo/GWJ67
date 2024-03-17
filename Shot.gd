@@ -12,11 +12,12 @@ func _on_timer_timeout():
 
 func _on_body_entered(body: Node2D):
 	if body != shooter:
-		if body is Grunt:
-			body.take_damage(100, shooter)
-		if body is Roller:
-			body.take_damage(10, shooter)
-		if body is Shooter:
-			body.take_damage(30, shooter)
+		if body is Host&&body.state != body.States.DEAD:
+			if body is Grunt:
+				body.take_damage(100, shooter)
+			if body is Roller:
+				body.take_damage(10, shooter)
+			if body is Shooter:
+				body.take_damage(30, shooter)
 
 		queue_free()

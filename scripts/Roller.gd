@@ -37,6 +37,6 @@ func _attack():
 		initial_position = position
 		roll = true
 
-func host_in_range(host: Host):
+func host_in_range():
 	if !roll:
 		_attack()
