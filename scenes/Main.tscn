@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cq7bwoqn6xemn"]
+[gd_scene load_steps=15 format=3 uid="uid://cq7bwoqn6xemn"]
 
 [ext_resource type="PackedScene" uid="uid://hw103vyho245" path="res://prefabs/Player.tscn" id="1_i8of0"]
 [ext_resource type="Script" path="res://scripts/GameControl.gd" id="1_kqbs3"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://f14ls0xpn05r" path="res://prefabs/Text.tscn" id="9_1slm2"]
 [ext_resource type="PackedScene" uid="uid://degda4xpfigwt" path="res://prefabs/TextTrigger.tscn" id="12_w70my"]
 [ext_resource type="PackedScene" uid="uid://bixvqlrbcaduf" path="res://prefabs/Roller.tscn" id="13_k34no"]
+[ext_resource type="PackedScene" uid="uid://0k2v7psklto3" path="res://prefabs/Shooter.tscn" id="14_yeovp"]
 
 [node name="GameControl" type="Node2D" node_paths=PackedStringArray("room_cameras")]
 y_sort_enabled = true
@@ -99,22 +100,13 @@ nine_patch_stretch = true
 texture_progress = ExtResource("5_sjbhb")
 tint_progress = Color(0.698039, 0.0627451, 0.188235, 1)
 
-[node name="Grunt" parent="." node_paths=PackedStringArray("tile_map") groups=["Host"] instance=ExtResource("3_msbdl")]
-position = Vector2(215, 120)
-tile_map = NodePath("../TileMap")
-start_health = 4
-spawn_direction = Vector2(1, 2.08165e-12)
-state = "Dead"
-
-[node name="Grunt2" parent="." node_paths=PackedStringArray("tile_map") groups=["Host"] instance=ExtResource("3_msbdl")]
+[node name="Grunt2" parent="." groups=["Host"] instance=ExtResource("3_msbdl")]
 z_as_relative = false
 position = Vector2(344, 120)
-tile_map = NodePath("../TileMap")
 spawn_direction = Vector2(-1, 2.08165e-12)
 
-[node name="Grunt3" parent="." node_paths=PackedStringArray("tile_map") groups=["Host"] instance=ExtResource("3_msbdl")]
+[node name="Grunt3" parent="." groups=["Host"] instance=ExtResource("3_msbdl")]
 position = Vector2(567, 120)
-tile_map = NodePath("../TileMap")
 
 [node name="Room1" type="Node2D" parent="."]
 
@@ -152,12 +144,11 @@ game_controller = NodePath("../..")
 [node name="Camera2D" type="Camera2D" parent="Room4"]
 position = Vector2(568, -88)
 
-[node name="Grunt4" parent="." node_paths=PackedStringArray("tile_map") groups=["Host"] instance=ExtResource("3_msbdl")]
+[node name="Grunt4" parent="." groups=["Host"] instance=ExtResource("3_msbdl")]
 position = Vector2(599, 88)
-tile_map = NodePath("../TileMap")
 
 [node name="TextTrigger" parent="." node_paths=PackedStringArray("text_controller") instance=ExtResource("12_w70my")]
-position = Vector2(55, 120)
+position = Vector2(39, 120)
 text_controller = NodePath("../CanvasLayer/Control/TextController")
 text = "Quick, you're loosing health! Get in that
 dead guys body to heal!"
@@ -171,5 +162,16 @@ wait_time = 2.0
 
 [node name="Grunt5" parent="." instance=ExtResource("13_k34no")]
 position = Vector2(631, -120)
+spawn_direction = Vector2(2.08165e-12, 1)
+
+[node name="Shooter" parent="." instance=ExtResource("14_yeovp")]
+position = Vector2(215, 120)
+max_health = 10
+start_health = 4
+spawn_direction = Vector2(2.08165e-12, 1)
+state = "Dead"
+
+[node name="Shooter2" parent="." instance=ExtResource("14_yeovp")]
+position = Vector2(503, -120)
 
 [connection signal="health_changed" from="Player" to="CanvasLayer/Control/HealthUI" method="_on_player_health_changed"]

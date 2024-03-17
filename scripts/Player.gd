@@ -43,7 +43,7 @@ func _physics_process(delta):
 	if Input.is_action_pressed("secondary")&&host&&host_active&&!text_controller.text_up:
 		exit_host = true
 	
-	if host&&host.anim_state.get_current_node() != States.ATTACK&&Input.is_action_just_pressed("primary"):
+	if host&&host.state != host.States.DEAD&&host.anim_state.get_current_node() != States.ATTACK&&Input.is_action_just_pressed("primary"):
 		change_state(States.ATTACK)
 		host._attack()
 	elif is_moving == false:

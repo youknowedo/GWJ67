@@ -10,7 +10,6 @@ const States = {
 }
 
 @export var ray: RayCast2D
-@export var tile_map: TileMap
 @export var anim_tree: AnimationTree
 @export var max_health = 100
 @export var start_health = 100
