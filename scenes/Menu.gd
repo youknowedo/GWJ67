@@ -3,7 +3,11 @@ extends Control
 @export var first_level: PackedScene
 
 @onready var select_sound: AudioStreamPlayer = $Select
+@onready var game_over_sound: AudioStreamPlayer = $GameOverSound
 @onready var title = $Title
+@onready var game_over = $GameOver
+
+var game: Node
 
 var started = false
 
@@ -17,6 +21,13 @@ func _process(delta):
 		started = true
 		select_sound.play()
 		title.hide()
+		game_over.hide()
 
-		var first = first_level.instantiate()
-		add_child(first)
+		game = first_level.instantiate()
+		add_child(game)
+
+func player_died():
+	game_over_sound.play()
+	started = false
+	game_over.show()
+	game.queue_free()

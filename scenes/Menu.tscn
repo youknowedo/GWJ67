@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://c2gai6l6q82kt"]
+[gd_scene load_steps=7 format=3 uid="uid://c2gai6l6q82kt"]
 
 [ext_resource type="Script" path="res://scenes/Menu.gd" id="1_74dmy"]
 [ext_resource type="Texture2D" uid="uid://dym3lpldkfrll" path="res://sprites/Title.png" id="2_bvgq3"]
 [ext_resource type="PackedScene" uid="uid://cq7bwoqn6xemn" path="res://scenes/Main.tscn" id="2_t7gah"]
 [ext_resource type="AudioStream" uid="uid://jnbxp0axn2xw" path="res://audio/Select.wav" id="3_vd447"]
+[ext_resource type="Texture2D" uid="uid://b51e76m3eb02o" path="res://sprites/GameOver.png" id="4_61u7n"]
+[ext_resource type="AudioStream" uid="uid://bdl6t4l7atay5" path="res://audio/Die.wav" id="6_6h2yx"]
 
-[node name="Main" type="Control"]
+[node name="Main" type="Control" groups=["Main"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,5 +31,22 @@ grow_vertical = 2
 texture_filter = 1
 texture = ExtResource("2_bvgq3")
 
+[node name="GameOver" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOver" type="Sprite2D" parent="GameOver"]
+texture = ExtResource("4_61u7n")
+
 [node name="Select" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_vd447")
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_6h2yx")

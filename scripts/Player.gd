@@ -195,3 +195,4 @@ func _on_health_timer_timeout():
 		if health <= 0:
 			health_timer.stop()
 			player_died.emit()
+			get_tree().call_group("Main", "player_died")
