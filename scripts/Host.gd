@@ -42,6 +42,7 @@ func ready():
 	pass
 
 func _process(delta):
+	process(delta)
 	if state == States.DEAD:
 		anim_state.travel("Dead")
 		return
@@ -68,6 +69,9 @@ func _process(delta):
 				host_in_range(collider)
 	else:
 		host_left_range(collider)
+
+func process(_delta):
+	pass
 
 func take_damage(damage: int, by: Host):
 	health -= damage

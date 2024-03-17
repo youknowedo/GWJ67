@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cq7bwoqn6xemn"]
+[gd_scene load_steps=14 format=3 uid="uid://cq7bwoqn6xemn"]
 
 [ext_resource type="PackedScene" uid="uid://hw103vyho245" path="res://prefabs/Player.tscn" id="1_i8of0"]
 [ext_resource type="Script" path="res://scripts/GameControl.gd" id="1_kqbs3"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bp0si4n5qf2wg" path="res://prefabs/CameraTrigger.tscn" id="8_aoniw"]
 [ext_resource type="PackedScene" uid="uid://f14ls0xpn05r" path="res://prefabs/Text.tscn" id="9_1slm2"]
 [ext_resource type="PackedScene" uid="uid://degda4xpfigwt" path="res://prefabs/TextTrigger.tscn" id="12_w70my"]
+[ext_resource type="PackedScene" uid="uid://bixvqlrbcaduf" path="res://prefabs/Roller.tscn" id="13_k34no"]
 
 [node name="GameControl" type="Node2D" node_paths=PackedStringArray("room_cameras")]
 y_sort_enabled = true
@@ -167,5 +168,8 @@ text_controller = NodePath("../CanvasLayer/Control/TextController")
 text = "Oh no! You drained all of his energy.
 Continue to find another body!"
 wait_time = 2.0
+
+[node name="Grunt5" parent="." instance=ExtResource("13_k34no")]
+position = Vector2(631, -120)
 
 [connection signal="health_changed" from="Player" to="CanvasLayer/Control/HealthUI" method="_on_player_health_changed"]
