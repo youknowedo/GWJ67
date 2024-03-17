@@ -67,6 +67,7 @@ func process_player_movement_input():
 		input_direction = host.anim_tree.get("parameters/Idle/blend_position").round()
 		
 		health_changed.emit(health, 0)
+		host.player = null
 		host = null
 		host_active = false
 		exit_host = false
@@ -139,6 +140,8 @@ func change_state(state: String):
 func _on_body_entered(body: Host):
 	if host == null:
 		host = body
+		host.player = self
+		host.attack = false
 		ray.set_collision_mask_value(1, true)
 		health_timer.start()
 

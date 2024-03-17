@@ -516,7 +516,7 @@ states/Idle/position = Vector2(388, 6)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_5n7mm")
 states/Walk/position = Vector2(388, 118)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_024la"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_75aau"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_efuww"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_g5uh4"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_icswn"), "Idle", "Dead", SubResource("AnimationNodeStateMachineTransition_5712m"), "Dead", "Idle", SubResource("AnimationNodeStateMachineTransition_eldfe")]
-graph_offset = Vector2(-634, -114)
+graph_offset = Vector2(-272, -116)
 
 [node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("attack_timer", "ray", "anim_tree")]
 y_sort_enabled = true
@@ -554,5 +554,9 @@ parameters/Idle/blend_position = Vector2(-0.997884, -0.0277778)
 parameters/Walk/blend_position = Vector2(0, 0)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+collision_mask = 3
 
 [node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_attack_timer_timeout"]
