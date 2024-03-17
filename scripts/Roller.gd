@@ -1,6 +1,8 @@
 extends Host
 class_name Roller
 
+@onready var roller_hit: AudioStreamPlayer = $RollerHit
+
 var roll = false
 var initial_position: Vector2
 var percent_moved_to_next_tile = 0.0
@@ -34,6 +36,7 @@ func _attack():
 		anim_state.travel("Idle")
 		stop_looking = true
 
+		roller_hit.play()
 		if body is Host&&body.state != States.DEAD:
 			if body is Shooter:
 				body.take_damage(100, self)

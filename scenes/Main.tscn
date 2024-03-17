@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cq7bwoqn6xemn"]
+[gd_scene load_steps=16 format=3 uid="uid://cq7bwoqn6xemn"]
 
 [ext_resource type="PackedScene" uid="uid://hw103vyho245" path="res://prefabs/Player.tscn" id="1_i8of0"]
 [ext_resource type="Script" path="res://scripts/GameControl.gd" id="1_kqbs3"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://degda4xpfigwt" path="res://prefabs/TextTrigger.tscn" id="12_w70my"]
 [ext_resource type="PackedScene" uid="uid://bixvqlrbcaduf" path="res://prefabs/Roller.tscn" id="13_k34no"]
 [ext_resource type="PackedScene" uid="uid://0k2v7psklto3" path="res://prefabs/Shooter.tscn" id="14_yeovp"]
+[ext_resource type="AudioStream" uid="uid://dvst0al08p4va" path="res://audio/Music.wav" id="15_w46aq"]
 
 [node name="GameControl" type="Node2D" node_paths=PackedStringArray("room_cameras")]
 y_sort_enabled = true
@@ -189,5 +190,10 @@ forgot i entered the jam. anyways,
 this guy instakills the big guy, which
 kills the small one which kills this
 guy. have fun!"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_w46aq")
+volume_db = -20.0
+autoplay = true
 
 [connection signal="health_changed" from="Player" to="CanvasLayer/Control/HealthUI" method="_on_player_health_changed"]

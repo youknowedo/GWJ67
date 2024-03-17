@@ -4,7 +4,11 @@ class_name Shooter
 @export var attack_timer: Timer
 @export var shot: PackedScene
 
+@onready var shoot: AudioStreamPlayer = $Shoot
+
 func _attack():
+	shoot.play()
+
 	var new_shot = shot.instantiate()
 	new_shot.position = position
 	new_shot.dir = anim_tree.get("parameters/Idle/blend_position").round()

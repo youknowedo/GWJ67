@@ -1,7 +1,8 @@
-[gd_scene load_steps=43 format=3 uid="uid://bixvqlrbcaduf"]
+[gd_scene load_steps=44 format=3 uid="uid://bixvqlrbcaduf"]
 
 [ext_resource type="Script" path="res://scripts/Roller.gd" id="1_u6c2g"]
 [ext_resource type="Texture2D" uid="uid://ddnmogjafimfb" path="res://sprites/roller.png" id="2_p1a8t"]
+[ext_resource type="AudioStream" uid="uid://inf820ffx36l" path="res://audio/RollerHit.wav" id="3_giekm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvpin"]
 size = Vector2(16, 16)
@@ -555,3 +556,8 @@ parameters/Walk/blend_position = Vector2(0, 0)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 collision_mask = 3
+
+[node name="RollerHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_giekm")
+
+[node name="Die" type="AudioStreamPlayer" parent="."]

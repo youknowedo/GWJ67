@@ -3,7 +3,10 @@ class_name Grunt
 
 @export var attack_timer: Timer
 
+@onready var punch: AudioStreamPlayer = $Punch
+
 func _attack():
+	punch.play()
 	ray.target_position = anim_tree.get("parameters/Idle/blend_position") * 16 * see_distance
 	ray.force_raycast_update()
 	if ray.is_colliding():

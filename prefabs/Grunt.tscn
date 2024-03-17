@@ -1,7 +1,9 @@
-[gd_scene load_steps=43 format=3 uid="uid://kvixyxercbpg"]
+[gd_scene load_steps=45 format=3 uid="uid://kvixyxercbpg"]
 
 [ext_resource type="Script" path="res://scripts/Grunt.gd" id="1_xglap"]
 [ext_resource type="Texture2D" uid="uid://y8mtj51jrn5x" path="res://sprites/grunt.png" id="2_fi7dc"]
+[ext_resource type="AudioStream" uid="uid://bdl6t4l7atay5" path="res://audio/Die.wav" id="3_v61hj"]
+[ext_resource type="AudioStream" uid="uid://bkb3k7ygdmiis" path="res://audio/Punch.wav" id="4_i1u16"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvpin"]
 size = Vector2(16, 16)
@@ -558,5 +560,11 @@ collision_mask = 3
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="Die" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_v61hj")
+
+[node name="Punch" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_i1u16")
 
 [connection signal="timeout" from="Timer" to="." method="_on_attack_timer_timeout"]

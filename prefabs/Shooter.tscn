@@ -1,8 +1,10 @@
-[gd_scene load_steps=44 format=3 uid="uid://0k2v7psklto3"]
+[gd_scene load_steps=46 format=3 uid="uid://0k2v7psklto3"]
 
 [ext_resource type="Script" path="res://scripts/Shooter.gd" id="1_acjwq"]
 [ext_resource type="Texture2D" uid="uid://bog42spoatx13" path="res://sprites/shooter.png" id="2_7826k"]
 [ext_resource type="PackedScene" uid="uid://cutplvjkyb40r" path="res://prefabs/Shot.tscn" id="2_xtewf"]
+[ext_resource type="AudioStream" uid="uid://bdl6t4l7atay5" path="res://audio/Die.wav" id="4_oidq5"]
+[ext_resource type="AudioStream" uid="uid://dhhauwbf4qe1j" path="res://audio/Shoot.wav" id="5_gxhgb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvpin"]
 size = Vector2(16, 16)
@@ -561,5 +563,11 @@ collision_mask = 3
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="Die" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_oidq5")
+
+[node name="Shoot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_gxhgb")
 
 [connection signal="timeout" from="Timer" to="." method="_on_attack_timer_timeout"]

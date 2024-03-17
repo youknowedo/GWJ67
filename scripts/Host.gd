@@ -19,6 +19,7 @@ const States = {
 @export var see_distance = 2
 @export_enum("Search", "Dead", "Controlled", "Walk") var state = States.SEARCH
 
+@onready var die: AudioStreamPlayer = $Die
 @onready var anim_state = anim_tree.get("parameters/playback")
 @onready var health = start_health
 
@@ -81,6 +82,7 @@ func take_damage(damage: int, by: Host):
 		max_health = 10
 		state = States.DEAD
 		anim_state.travel("Dead")
+		die.play()
 
 	anim_tree.set("parameters/Idle/blend_position", by.anim_tree.get("parameters/Idle/blend_position") * - 1)
 	anim_tree.set("parameters/Walk/blend_position", by.anim_tree.get("parameters/Walk/blend_position") * - 1)

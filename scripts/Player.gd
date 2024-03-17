@@ -18,6 +18,7 @@ const States = {
 @onready var anim_tree = $AnimationTree
 @onready var anim_state = anim_tree.get("parameters/playback")
 @onready var health_timer = $HealthTimer
+@onready var die = $Die
 
 const TILE_SIZE = 16
 
@@ -168,6 +169,7 @@ func _on_health_timer_timeout():
 			health_timer.stop()
 		if host.health <= 0:
 			if host.state == Host.States.DEAD:
+				die.play()
 				host.queue_free()
 				host = null
 				host_active = false
