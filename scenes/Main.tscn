@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cq7bwoqn6xemn"]
+[gd_scene load_steps=17 format=3 uid="uid://cq7bwoqn6xemn"]
 
 [ext_resource type="PackedScene" uid="uid://hw103vyho245" path="res://prefabs/Player.tscn" id="1_i8of0"]
 [ext_resource type="Script" path="res://scripts/GameControl.gd" id="1_kqbs3"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/HealthUI.gd" id="5_w38kq"]
 [ext_resource type="Script" path="res://scripts/TextController.gd" id="6_wdbvj"]
 [ext_resource type="PackedScene" uid="uid://bp0si4n5qf2wg" path="res://prefabs/CameraTrigger.tscn" id="8_aoniw"]
+[ext_resource type="AudioStream" uid="uid://jnbxp0axn2xw" path="res://audio/Select.wav" id="8_bcivs"]
 [ext_resource type="PackedScene" uid="uid://f14ls0xpn05r" path="res://prefabs/Text.tscn" id="9_1slm2"]
 [ext_resource type="PackedScene" uid="uid://degda4xpfigwt" path="res://prefabs/TextTrigger.tscn" id="12_w70my"]
 [ext_resource type="PackedScene" uid="uid://bixvqlrbcaduf" path="res://prefabs/Roller.tscn" id="13_k34no"]
@@ -61,6 +62,9 @@ offset_left = -120.064
 offset_top = 52.0
 offset_right = -160.0
 offset_bottom = -107.92
+
+[node name="Select" type="AudioStreamPlayer" parent="CanvasLayer/Control/TextController"]
+stream = ExtResource("8_bcivs")
 
 [node name="HealthUI" type="Control" parent="CanvasLayer/Control" node_paths=PackedStringArray("host_health_bar", "parasite_health_bar", "text")]
 anchors_preset = 0
