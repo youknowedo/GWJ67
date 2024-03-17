@@ -23,6 +23,7 @@ const States = {
 @onready var health = start_health
 
 var attack = false
+var stop_looking = false
 var player: Player
 
 func _ready():
@@ -65,7 +66,8 @@ func _process(delta):
 			if collider.state == States.DEAD:
 				host_left_range()
 			else:
-				host_in_range()
+				if !stop_looking:
+					host_in_range()
 	else:
 		host_left_range()
 
