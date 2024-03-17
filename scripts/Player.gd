@@ -40,7 +40,7 @@ func _ready():
 	health_changed.emit(health, 0)
 
 func _physics_process(delta):
-	if Input.is_action_pressed("secondary")&&host&&host_active:
+	if Input.is_action_pressed("secondary")&&host&&host_active&&!text_controller.text_up:
 		exit_host = true
 	
 	if host&&host.anim_state.get_current_node() != States.ATTACK&&Input.is_action_just_pressed("primary"):
@@ -56,7 +56,7 @@ func _physics_process(delta):
 		is_moving = false
 
 func process_player_movement_input():
-	if exit_host:
+	if exit_host&&!text_controller.text_up:
 		$Sprite2D.show()
 		if host.state != Host.States.DEAD:
 			change_state(States.IDLE)
@@ -79,7 +79,7 @@ func process_player_movement_input():
 				input_direction = dir
 				break
 
-	elif !host||host.state != "Dead":
+	elif (!host||host.state != "Dead")&&!text_controller.text_up:
 		if input_direction.y == 0:
 			input_direction.x = (int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left")))
 		if input_direction.x == 0:
@@ -149,6 +149,9 @@ func _on_body_entered(body: Host):
 			health_changed.emit(health, host.health)
 
 func _on_health_timer_timeout():
+	if text_controller.text_up:
+		return
+
 	var host_max_health = 100
 
 	if host&&health < max_health:

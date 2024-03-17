@@ -16,6 +16,6 @@ func show_text(_text: String):
 	text_up = true
 
 func _process(delta):
-	if text_up&&Input.is_action_just_pressed("tetriary"):
+	if text_up&&Input.is_action_just_pressed("primary"):
 		hide()
 		text_up = false
