@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2gai6l6q82kt"]
+
+[ext_resource type="Script" path="res://scenes/Menu.gd" id="1_74dmy"]
+[ext_resource type="Texture2D" uid="uid://dym3lpldkfrll" path="res://sprites/Title.png" id="2_bvgq3"]
+[ext_resource type="PackedScene" uid="uid://cq7bwoqn6xemn" path="res://scenes/Main.tscn" id="2_t7gah"]
+[ext_resource type="AudioStream" uid="uid://jnbxp0axn2xw" path="res://audio/Select.wav" id="3_vd447"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_74dmy")
+first_level = ExtResource("2_t7gah")
+
+[node name="Title" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Sprite2D" parent="Title"]
+texture_filter = 1
+texture = ExtResource("2_bvgq3")
+
+[node name="Select" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_vd447")

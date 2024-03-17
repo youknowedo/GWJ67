@@ -19,6 +19,7 @@ const States = {
 @onready var anim_state = anim_tree.get("parameters/playback")
 @onready var health_timer = $HealthTimer
 @onready var die = $Die
+@onready var exit = $Exit
 
 const TILE_SIZE = 16
 
@@ -58,6 +59,7 @@ func _physics_process(delta):
 
 func process_player_movement_input():
 	if exit_host&&!text_controller.text_up:
+		exit.play()
 		$Sprite2D.show()
 		if host.state != Host.States.DEAD:
 			change_state(States.IDLE)

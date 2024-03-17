@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GWJ67"
-run/main_scene="res://scenes/Main.tscn"
+run/main_scene="res://scenes/Menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,7 +22,7 @@ DiscordSDKLoader="*res://addons/discord-sdk-gd/nodes/discord_autoload.gd"
 [display]
 
 window/size/viewport_width=256
-window/size/viewport_height=256
+window/size/viewport_height=240
 window/stretch/mode="viewport"
 window/per_pixel_transparency/allowed=true
 
